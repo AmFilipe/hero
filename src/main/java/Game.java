@@ -10,11 +10,11 @@ import java.io.IOException;
 
 public class Game {
 
-    private Hero hero;
     private Position position;
-    private int x = 10;
-    private int y = 10;
     private final TerminalScreen screen;
+    private Arena arena;
+
+
     public Game(int  width, int height) throws IOException {
         // Terminal terminal = new DefaultTerminalFactory().createTerminal();
         Terminal terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(width, height)).createTerminal();
@@ -24,17 +24,12 @@ public class Game {
         screen.doResizeIfNecessary();     // resize screen if necessary
         TerminalSize terminalSize = new TerminalSize(width, height);
         // DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
-        hero = new Hero(10, 10);
+
     }
 
     private void draw() throws IOException {
         screen.clear();
-        //screen.setCharacter(0, 0, TextCharacter.fromCharacter('X')[0]);
-        //screen.setCharacter(0, 30, TextCharacter.fromCharacter('X')[0]);
-        //screen.setCharacter(30, 0, TextCharacter.fromCharacter('X')[0]);
-        //screen.setCharacter(30, 30, TextCharacter.fromCharacter('X')[0]);
-        //screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
-        hero.draw(screen);
+        arena.draw(screen);
         screen.refresh();
 
     }
@@ -54,31 +49,10 @@ public class Game {
 
 
     private void processKey(KeyStroke key) {
-        System.out.println(key);
-        String keyT = key.getKeyType().toString();
-        switch (keyT) {
-            case "ArrowUp":
-                //hero.moveUp();
-                moveHero(hero.moveUp());
-                break;
-            case "ArrowDown":
-                //hero.moveDown();
-                moveHero(hero.moveDown());
-                break;
-            case "ArrowLeft":
-                //hero.moveLeft();
-                moveHero(hero.moveLeft());
-                break;
-            case "ArrowRight":
-                //hero.moveRight();
-                moveHero(hero.moveRight());
-                break;
+        arena.processKey(key);
         }
-    }
 
-    private void moveHero(Position position) {
-        hero.setPosition(position);
-    }
+
 }
 
 
