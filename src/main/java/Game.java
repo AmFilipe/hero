@@ -11,6 +11,7 @@ import java.io.IOException;
 public class Game {
 
     private Hero hero;
+    private Position position;
     private int x = 10;
     private int y = 10;
     private final TerminalScreen screen;
@@ -57,18 +58,26 @@ public class Game {
         String keyT = key.getKeyType().toString();
         switch (keyT) {
             case "ArrowUp":
-                hero.moveUp();
+                //hero.moveUp();
+                moveHero(hero.moveUp());
                 break;
             case "ArrowDown":
-                hero.moveDown();
+                //hero.moveDown();
+                moveHero(hero.moveDown());
                 break;
             case "ArrowLeft":
-                hero.moveLeft();
+                //hero.moveLeft();
+                moveHero(hero.moveLeft());
                 break;
             case "ArrowRight":
-                hero.moveRight();
+                //hero.moveRight();
+                moveHero(hero.moveRight());
                 break;
         }
+    }
+
+    private void moveHero(Position position) {
+        hero.setPosition(position);
     }
 }
 
