@@ -24,7 +24,7 @@ public class Game {
         screen.doResizeIfNecessary();     // resize screen if necessary
         TerminalSize terminalSize = new TerminalSize(width, height);
         // DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
-
+        arena = new Arena(width, height);
     }
 
     private void draw() throws IOException {
