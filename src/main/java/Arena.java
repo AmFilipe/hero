@@ -13,6 +13,7 @@ import java.util.Random;
 public class Arena {
     public static Object processKey;
     private final List<Wall> walls;
+    private List<Coin> coins;
     private int width;
     private int height;
     private Hero hero;
