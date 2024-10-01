@@ -6,9 +6,12 @@ import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Arena {
     public static Object processKey;
+    private final List<Wall> walls;
     private int width;
     private int height;
     private Hero hero;
@@ -17,12 +20,28 @@ public class Arena {
         this.width = width;
         this.height = height;
         this.hero = new Hero (10,10);
+        this.walls = createWalls();
     }
 
+    private List<Wall> createWalls() {
+        List<Wall> walls = new ArrayList<>();
+        for (int c = 0; c < width; c++) {
+            walls.add(new Wall(c, 0)); // Parede superior
+            walls.add(new Wall(c, height - 1)); // Parede inferior
+        }
+        for (int r = 1; r < height - 1; r++) {
+            walls.add(new Wall(0, r)); // Parede esquerda
+            walls.add(new Wall(width - 1, r)); // Parede direita
+        }
+        return walls;
+    }
 
     public void draw(TextGraphics graphics) {
         graphics.setBackgroundColor(TextColor.Factory.fromString("#336699"));
         graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
+        for (Wall wall : walls) {
+            wall.draw(graphics);
+        }
         hero.draw(graphics);
     }
 
@@ -51,7 +70,17 @@ public class Arena {
     }
 
     private boolean canHeroMove(Position position) {
-        return position.getX() >= 0 && position.getX() < width &&
-                position.getY() >= 0 && position.getY() < height;
+        if (position.getX() < 0 || position.getX() >= width || position.getY() < 0 || position.getY() >= height) {
+            return false;
+        }
+
+        
+        for (Wall wall : walls) {
+            if (wall.getPosition().equals(position)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
