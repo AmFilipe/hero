@@ -10,8 +10,8 @@ import java.io.IOException;
 public class Hero {
     private Position position;
 
-    public Hero(int x, int y) {
-        this.position = new Position(x, y);
+    public Hero(int hx, int hy) {
+        this.position = new Position(hx, hy);
     }
     public void draw(TextGraphics graphics) {
 

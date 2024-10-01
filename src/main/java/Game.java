@@ -13,7 +13,7 @@ public class Game {
 
     private Position position;
     private final TerminalScreen screen;
-    private Arena arena;
+    private final Arena arena;
 
 
     public Game(int  width, int height) throws IOException {
