@@ -8,6 +8,7 @@ import com.googlecode.lanterna.screen.Screen;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Arena {
     public static Object processKey;
@@ -21,19 +22,28 @@ public class Arena {
         this.height = height;
         hero = new Hero (10,10);
         this.walls = createWalls();
+        this.coins = createCoins();
     }
 
     private List<Wall> createWalls() {
         List<Wall> walls = new ArrayList<>();
         for (int c = 0; c < width; c++) {
-            walls.add(new Wall(c, 0)); // Parede superior
-            walls.add(new Wall(c, height - 1)); // Parede inferior
+            walls.add(new Wall(c, 0));
+            walls.add(new Wall(c, height - 1));
         }
         for (int r = 1; r < height - 1; r++) {
-            walls.add(new Wall(0, r)); // Parede esquerda
-            walls.add(new Wall(width - 1, r)); // Parede direita
+            walls.add(new Wall(0, r));
+            walls.add(new Wall(width - 1, r));
         }
         return walls;
+    }
+
+    private List<Coin> createCoins() {
+        Random random = new Random();
+        ArrayList<Coin> coins = new ArrayList<>();
+        for (int i = 0; i < 5; i++)
+            coins.add(new Coin(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
+        return coins;
     }
 
     public void draw(TextGraphics graphics) {
@@ -41,6 +51,10 @@ public class Arena {
         graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
         for (Wall wall : walls) {
             wall.draw(graphics);
+        }
+
+        for (Coin coin : coins) {
+            coin.draw(graphics);
         }
         hero.draw(graphics);
     }
@@ -83,5 +97,15 @@ public class Arena {
         }
 
         return true;
+    }
+    private void retrieveCoins() {
+
+        for (int i = 0; i < coins.size(); i++) {
+            Coin coin = coins.get(i);
+            if (coin.getPosition().equals(hero.getPosition())) {
+                coins.remove(coin);
+                break;
+            }
+        }
     }
 }
