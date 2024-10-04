@@ -9,10 +9,12 @@ import java.io.IOException;
 
 public class Hero extends Element{
     private Position position;
+    private int energy;
 
     public Hero(int hx, int hy) {
         super(hx, hy);
         this.position = new Position(hx, hy);
+        this.energy = 100;
     }
     public void draw(TextGraphics graphics) {
 
@@ -41,4 +43,13 @@ public class Hero extends Element{
     public void setPosition(Position position) {
         this.position = position;
     }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public void decreaseEnergy(int amount) {
+        energy -= amount;
+    }
+
 }

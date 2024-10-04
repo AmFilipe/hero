@@ -17,14 +17,13 @@ public class Game {
 
 
     public Game(int  width, int height) throws IOException {
-        // Terminal terminal = new DefaultTerminalFactory().createTerminal();
+
         Terminal terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(width, height)).createTerminal();
         screen = new TerminalScreen(terminal);
-        screen.setCursorPosition(null);   // we don't need a cursor
-        screen.startScreen();             // screens must be started
-        screen.doResizeIfNecessary();     // resize screen if necessary
+        screen.setCursorPosition(null);
+        screen.startScreen();
+        screen.doResizeIfNecessary();
         TerminalSize terminalSize = new TerminalSize(width, height);
-        // DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
         arena = new Arena(width, height);
     }
 
@@ -45,7 +44,7 @@ public class Game {
                 screen.close();
             if (key.getKeyType() == KeyType.EOF)
                 break;
-            processKey(key);
+            arena.processKey(key);
         }
     }
 
